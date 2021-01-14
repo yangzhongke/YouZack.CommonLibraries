@@ -8,14 +8,19 @@ namespace System
     {
         private readonly static JavaScriptEncoder Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
 
-        public static string ToJsonString(this object value)
+        public static string ToJsonString(this object value,bool camelCase=false)
         {
             if (value == null)
             {
                 return null;
             }
-            return JsonSerializer.Serialize(value, value.GetType(),
-                new JsonSerializerOptions { Encoder = Encoder });
+            JsonSerializerOptions opt = new JsonSerializerOptions { Encoder = Encoder };
+            if(camelCase)
+            {
+                opt.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+                opt.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+            }            
+            return JsonSerializer.Serialize(value, value.GetType(), opt);
         }
 
         public static T ParseJson<T>(this string value)
