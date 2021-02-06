@@ -13,6 +13,7 @@ namespace YouZack.Helpers
         public BizException(string? message, Exception? innerException) : base(message,innerException) { }
 
         public int Code { get; set; }
-        public string Status { get; set; }
+        public string StrCode { get; set; }
+        public object Data { get; set; }
     }
 }
